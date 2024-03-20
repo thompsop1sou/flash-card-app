@@ -6,11 +6,14 @@ extends Area3D
 
 # PUBLIC PROPERTIES
 
-## Emitted when the mouse presses the button.
+## Emitted when the button starts being held down.
 signal down()
 
-## Emitted when the mouse releases the button.
+## Emitted when the button stops being held down.
 signal up()
+
+## Emitted when the button is pressed.
+signal pressed()
 
 
 
@@ -18,6 +21,9 @@ signal up()
 
 # Whether the mouse is currently hovering over the button.
 var _mouse_over = false
+
+# Whether the button is currently pressed down button.
+var _down = false
 
 
 
@@ -27,20 +33,39 @@ var _mouse_over = false
 func is_mouse_over() -> bool:
 	return _mouse_over
 
+## Returns whether the button is currently being held down.
+func is_down() -> bool:
+	return _down
+
 
 
 # PRIVATE METHODS
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	mouse_entered.connect(func (): _mouse_over = true)
-	mouse_exited.connect(func (): _mouse_over = false)
+	mouse_entered.connect(_on_mouse_entered)
+	mouse_exited.connect(_on_mouse_exited)
+
+# Called when the mouse enters the area of this button.
+func _on_mouse_entered():
+	_mouse_over = true
+
+# Called when the mouse exits the area of this button.
+func _on_mouse_exited():
+	_mouse_over = false
+	if _down:
+		_down = false
+		up.emit()
 
 # Handle mouse button clicks.
 func _input(event: InputEvent) -> void:
-	if _mouse_over:
-		if event is InputEventMouseButton:
-			if event.pressed:
-				down.emit()
-			else:
+	var mouse_button_event: InputEventMouseButton = event as InputEventMouseButton
+	if is_instance_valid(mouse_button_event) and _mouse_over:
+		if mouse_button_event.pressed:
+			_down = true
+			down.emit()
+		else:
+			if _down:
+				_down = false
 				up.emit()
+				pressed.emit()

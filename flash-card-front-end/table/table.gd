@@ -34,14 +34,14 @@ func _ready() -> void:
 			new_card.flip_orientation(false)
 
 # Called when the left arrow is pressed.
-func _on_left_arrow_down() -> void:
+func _on_left_arrow_pressed() -> void:
 	# Flip the center card to the front or move the cards along
 	if not flip_center(Card.Orientation.FRONT):
 		move_from_center(draw_stack)
 		move_to_center(discard_stack)
 
 # Called when the right arrow is pressed.
-func _on_right_arrow_down() -> void:
+func _on_right_arrow_pressed() -> void:
 	# Flip the center card to the back or move the cards along
 	if not flip_center(Card.Orientation.BACK):
 		move_from_center(discard_stack)
