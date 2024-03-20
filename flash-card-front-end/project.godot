@@ -16,10 +16,6 @@ config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 run/positional_shadow/soft_shadow_filter_quality=0
 
-[autoload]
-
-Utilities="*res://utilities.gd"
-
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

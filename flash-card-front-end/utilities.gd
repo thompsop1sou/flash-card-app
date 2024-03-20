@@ -1,3 +1,4 @@
+class_name Utilities
 extends Node
 
 ## Finds the first child node matching a type (or returns null).
