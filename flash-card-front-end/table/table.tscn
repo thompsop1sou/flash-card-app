@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=3 uid="uid://cnjufp3g5ubld"]
+
+[ext_resource type="Script" path="res://table/table.gd" id="1_1aj4v"]
+[ext_resource type="Script" path="res://table/stack.gd" id="2_6a2tr"]
+[ext_resource type="PackedScene" uid="uid://duoau4hurufch" path="res://card/card.tscn" id="3_wnaqj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ryhch"]
+albedo_color = Color(0.12549, 0.501961, 0.12549, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_y1v7i"]
+material = SubResource("StandardMaterial3D_ryhch")
+size = Vector3(13, 7, 1)
+
+[sub_resource type="Environment" id="Environment_84wpw"]
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.5
+
+[node name="Table" type="Node3D"]
+script = ExtResource("1_1aj4v")
+
+[node name="TableMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+mesh = SubResource("BoxMesh_y1v7i")
+
+[node name="DrawStack" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0.05)
+script = ExtResource("2_6a2tr")
+
+[node name="Card" parent="." instance=ExtResource("3_wnaqj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.05)
+
+[node name="DiscardStack" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0.05)
+script = ExtResource("2_6a2tr")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 4, 7)
+shadow_enabled = true
+shadow_blur = 5.0
+directional_shadow_mode = 0
+directional_shadow_max_distance = 10.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_84wpw")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.984808, -0.173648, 0, 0.173648, 0.984808, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7)
+fov = 60.0
