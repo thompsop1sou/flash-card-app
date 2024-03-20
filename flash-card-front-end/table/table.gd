@@ -7,10 +7,9 @@ extends Node3D
 @export_range(0.0, 1.0, 0.01, "or_greater", "suffix:s")
 var card_moving_duration: float = 0.25
 
-var card_scene := preload("res://card/card.tscn")
+var changing: bool = false
 
-var card_tween_a: Tween = null
-var card_tween_b: Tween = null
+var card_scene := preload("res://card/card.tscn")
 
 @onready var draw_stack: Stack = $Cards/DrawStack
 @onready var center_card_spot: Node3D = $Cards/CenterCardSpot
@@ -35,23 +34,25 @@ func _ready() -> void:
 
 # Called when the left arrow is pressed.
 func _on_left_arrow_pressed() -> void:
-	# Flip the center card to the front or move the cards along
-	if not flip_center(Card.Orientation.FRONT):
-		move_from_center(draw_stack)
-		move_to_center(discard_stack)
+	if not changing:
+		changing = true
+		if not flip_center(Card.Orientation.FRONT):
+			move_from_center(draw_stack)
+			move_to_center(discard_stack)
 
 # Called when the right arrow is pressed.
 func _on_right_arrow_pressed() -> void:
-	# Flip the center card to the back or move the cards along
-	if not flip_center(Card.Orientation.BACK):
-		move_from_center(discard_stack)
-		move_to_center(draw_stack)
+	if not changing:
+		changing = true
+		if not flip_center(Card.Orientation.BACK):
+			move_from_center(discard_stack)
+			move_to_center(draw_stack)
 
 # Tries to flip the center card. Returns true if successful.
 func flip_center(target_orientation: Card.Orientation) -> bool:
 	var center_card: Card = Utilities.find_first_child(center_card_spot, "Card") as Card
 	if is_instance_valid(center_card) and center_card.get_orientation() != target_orientation:
-		center_card.flip_orientation()
+		center_card.flip_orientation(true, func (): changing = false)
 		return true
 	else:
 		return false
@@ -62,8 +63,9 @@ func move_from_center(stack: Stack) -> bool:
 	if is_instance_valid(center_card):
 		stack.push_card(center_card)
 		center_card.reparent(stack)
-		card_tween_a = Utilities.reset_tween(card_tween_a)
-		card_tween_a.tween_property(center_card, "position", stack.get_top_position(), card_moving_duration)
+		var card_tween: Tween = create_tween()
+		card_tween.tween_property(center_card, "position", stack.get_top_position(), card_moving_duration)
+		card_tween.tween_callback(func (): changing = false)
 		return true
 	else:
 		return false
@@ -73,8 +75,9 @@ func move_to_center(stack: Stack):
 	var stack_card: Card = stack.pop_card()
 	if is_instance_valid(stack_card):
 		stack_card.reparent(center_card_spot)
-		card_tween_b = Utilities.reset_tween(card_tween_b)
-		card_tween_b.tween_property(stack_card, "position", Vector3.ZERO, card_moving_duration)
+		var card_tween: Tween = create_tween()
+		card_tween.tween_property(stack_card, "position", Vector3.ZERO, card_moving_duration)
+		card_tween.tween_callback(func (): changing = false)
 		return true
 	else:
 		return false

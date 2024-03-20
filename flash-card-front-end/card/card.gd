@@ -31,9 +31,6 @@ var back_text: String = "back":
 @export_range(0.0, 1.0, 0.01, "or_greater", "suffix:s")
 var flipping_duration: float = 0.25
 
-## Emitted when the card has finished flipping
-signal flipped()
-
 ## An enumeration of the different orientations that a card can be in.
 enum Orientation {FRONT, TO_FRONT, BACK, TO_BACK}
 
@@ -43,12 +40,6 @@ enum Orientation {FRONT, TO_FRONT, BACK, TO_BACK}
 
 # The current orientation of the card.
 var _orientation := Orientation.FRONT
-
-# The tween that will be used to animate the rotation of the card when flipping.
-var _rotating_tween: Tween = null
-
-# The tween that will be used to animate the translation of the card when flipping.
-var _translating_tween: Tween = null
 
 # Keep references to the front and back labels.
 @onready var _front_label: Label = $FrontMesh/FrontViewport/FrontLabel
@@ -60,16 +51,16 @@ var _translating_tween: Tween = null
 
 ## Flips the orientation of this card to the opposite of what it currently is.
 ## If [param animated], will use a tween to flip the card over a period of 0.5 seconds.
-func flip_orientation(animated: bool = true) -> void:
+func flip_orientation(animated: bool = true, callback: Callable = Callable()) -> void:
 	# Animate the card using a tween
 	if animated:
 		match _orientation:
 			# Flip the card to the back if currently on the front
 			Card.Orientation.FRONT:
-				_animate_card_flip(PI, Card.Orientation.BACK)
+				_animate_card_flip(PI, Card.Orientation.BACK, callback)
 			# Flip the card to the front if currently on the back
 			Card.Orientation.BACK:
-				_animate_card_flip(0.0, Card.Orientation.FRONT)
+				_animate_card_flip(0.0, Card.Orientation.FRONT, callback)
 			# Don't do anything if the card is currently changing
 			_:
 				pass
@@ -80,10 +71,12 @@ func flip_orientation(animated: bool = true) -> void:
 			Card.Orientation.FRONT:
 				rotation.y = PI
 				_orientation = Card.Orientation.BACK
+				callback.call()
 			# Flip the card to the front if currently on the back
 			Card.Orientation.BACK:
 				rotation.y = 0
 				_orientation = Card.Orientation.FRONT
+				callback.call()
 			# Don't do anything if the card is currently changing
 			_:
 				pass
@@ -104,29 +97,27 @@ func _ready() -> void:
 	back_text = back_text
 
 # Sets up the tweens for animating the card flip.
-func _animate_card_flip(target_rotation_y: float, target_orientation: Card.Orientation) -> void:
+func _animate_card_flip(rotation_y: float, orientation: Card.Orientation, callback: Callable) -> void:
 	# Rotation
-	_rotating_tween = Utilities.reset_tween(_rotating_tween)
-	var target_rotation := Vector3(rotation.x, target_rotation_y, rotation.z)
-	_rotating_tween.tween_property(self, "rotation", target_rotation, flipping_duration)
-	# Orientation of card
-	_orientation = target_orientation + 1
-	_rotating_tween.tween_callback(func (): _orientation = target_orientation)
-	_rotating_tween.tween_callback(func (): flipped.emit())
+	var rotating_tween: Tween = create_tween()
+	var target_rotation := Vector3(rotation.x, rotation_y, rotation.z)
+	rotating_tween.tween_property(self, "rotation", target_rotation, flipping_duration)
+	# Orientation of card and callback
+	_orientation = orientation + 1
+	rotating_tween.tween_callback(func (): _orientation = orientation)
+	rotating_tween.tween_callback(callback)
 	# Translation
 	_tween_translate_up()
 
 # Helper for _animate_card_flip() that moves the card up.
 func _tween_translate_up():
-	_translating_tween = Utilities.reset_tween(_translating_tween)
-	_translating_tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+	var translating_tween: Tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 	var target_translation := Vector3(position.x, position.y, position.z + 1.5)
-	_translating_tween.tween_property(self, "position", target_translation, flipping_duration / 2.0)
-	_translating_tween.tween_callback(_tween_translate_down)
+	translating_tween.tween_property(self, "position", target_translation, flipping_duration / 2.0)
+	translating_tween.tween_callback(_tween_translate_down)
 
 # Helper for _animate_card_flip() that moves the card down.
 func _tween_translate_down():
-	_translating_tween = Utilities.reset_tween(_translating_tween)
-	_translating_tween.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
+	var translating_tween: Tween = create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
 	var target_translation := Vector3(position.x, position.y, position.z - 1.5)
-	_translating_tween.tween_property(self, "position", target_translation, flipping_duration / 2.0)
+	translating_tween.tween_property(self, "position", target_translation, flipping_duration / 2.0)
