@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://table/table.gd" id="1_1aj4v"]
 [ext_resource type="Script" path="res://table/stack.gd" id="2_6a2tr"]
-[ext_resource type="PackedScene" uid="uid://duoau4hurufch" path="res://card/card.tscn" id="3_wnaqj"]
+[ext_resource type="PackedScene" uid="uid://ce3003fmlq16v" path="res://button/arrow_button.tscn" id="4_eiu7d"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ryhch"]
 albedo_color = Color(0.12549, 0.501961, 0.12549, 1)
@@ -23,21 +23,34 @@ script = ExtResource("1_1aj4v")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
 mesh = SubResource("BoxMesh_y1v7i")
 
-[node name="DrawStack" type="Node3D" parent="."]
+[node name="Cards" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="DrawStack" type="Node3D" parent="Cards"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0.05)
 script = ExtResource("2_6a2tr")
 
-[node name="Card" parent="." instance=ExtResource("3_wnaqj")]
+[node name="CenterCardSpot" type="Node3D" parent="Cards"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.05)
 
-[node name="DiscardStack" type="Node3D" parent="."]
+[node name="DiscardStack" type="Node3D" parent="Cards"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0.05)
 script = ExtResource("2_6a2tr")
+
+[node name="Buttons" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, 0)
+
+[node name="LeftArrow" parent="Buttons" instance=ExtResource("4_eiu7d")]
+transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, -1, 0, 0)
+
+[node name="RightArrow" parent="Buttons" instance=ExtResource("4_eiu7d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 4, 7)
 shadow_enabled = true
-shadow_blur = 5.0
+shadow_bias = 0.0
+shadow_reverse_cull_face = true
 directional_shadow_mode = 0
 directional_shadow_max_distance = 10.0
 
@@ -45,8 +58,11 @@ directional_shadow_max_distance = 10.0
 environment = SubResource("Environment_84wpw")
 
 [node name="CameraPivot" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.984808, -0.173648, 0, 0.173648, 0.984808, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.996195, -0.0871557, 0, 0.0871557, 0.996195, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7)
 fov = 60.0
+
+[connection signal="down" from="Buttons/LeftArrow" to="." method="_on_left_arrow_down"]
+[connection signal="down" from="Buttons/RightArrow" to="." method="_on_right_arrow_down"]

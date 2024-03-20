@@ -11,17 +11,28 @@ extends Node3D
 @export_multiline
 var front_text: String = "front":
 	get:
-		return _front_label.text
+		return front_text
 	set(value):
-		_front_label.text = value
+		front_text = value
+		if is_instance_valid(_front_label):
+			_front_label.text = front_text
 
 ## The text that will appear on the back side of the card.
 @export_multiline
 var back_text: String = "back":
 	get:
-		return _back_label.text
+		return back_text
 	set(value):
-		_back_label.text = value
+		back_text = value
+		if is_instance_valid(_back_label):
+			_back_label.text = back_text
+
+## How long the total flipping animation should last.
+@export_range(0.0, 1.0, 0.01, "or_greater", "suffix:s")
+var flipping_duration: float = 0.25
+
+## Emitted when the card has finished flipping
+signal flipped()
 
 ## An enumeration of the different orientations that a card can be in.
 enum Orientation {FRONT, TO_FRONT, BACK, TO_BACK}
@@ -38,9 +49,6 @@ var _rotating_tween: Tween = null
 
 # The tween that will be used to animate the translation of the card when flipping.
 var _translating_tween: Tween = null
-
-# How long the total flipping animation should last.
-var _flipping_duration: float = 0.5
 
 # Keep references to the front and back labels.
 @onready var _front_label: Label = $FrontMesh/FrontViewport/FrontLabel
@@ -89,35 +97,36 @@ func get_orientation() -> Card.Orientation:
 
 # PRIVATE METHODS
 
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	# Make sure the text on the labels is correct
+	front_text = front_text
+	back_text = back_text
+
 # Sets up the tweens for animating the card flip.
 func _animate_card_flip(target_rotation_y: float, target_orientation: Card.Orientation) -> void:
+	# Rotation
+	_rotating_tween = Utilities.reset_tween(_rotating_tween)
+	var target_rotation := Vector3(rotation.x, target_rotation_y, rotation.z)
+	_rotating_tween.tween_property(self, "rotation", target_rotation, flipping_duration)
 	# Orientation of card
 	_orientation = target_orientation + 1
-	# Rotation
-	_rotating_tween = _reset_tween(_rotating_tween)
-	var target_rotation := Vector3(rotation.x, target_rotation_y, rotation.z)
-	_rotating_tween.tween_property(self, "rotation", target_rotation, _flipping_duration)
 	_rotating_tween.tween_callback(func (): _orientation = target_orientation)
+	_rotating_tween.tween_callback(func (): flipped.emit())
 	# Translation
 	_tween_translate_up()
 
 # Helper for _animate_card_flip() that moves the card up.
 func _tween_translate_up():
-	_translating_tween = _reset_tween(_translating_tween)
+	_translating_tween = Utilities.reset_tween(_translating_tween)
 	_translating_tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
-	var target_translation := Vector3(0.0, 0.0, position.z + 1.5)
-	_translating_tween.tween_property(self, "position", target_translation, _flipping_duration / 2.0)
+	var target_translation := Vector3(position.x, position.y, position.z + 1.5)
+	_translating_tween.tween_property(self, "position", target_translation, flipping_duration / 2.0)
 	_translating_tween.tween_callback(_tween_translate_down)
 
 # Helper for _animate_card_flip() that moves the card down.
 func _tween_translate_down():
-	_translating_tween = _reset_tween(_translating_tween)
+	_translating_tween = Utilities.reset_tween(_translating_tween)
 	_translating_tween.set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_SINE)
-	var target_translation := Vector3(0.0, 0.0, position.z - 1.5)
-	_translating_tween.tween_property(self, "position", target_translation, _flipping_duration / 2.0)
-
-# Reset a tween.
-func _reset_tween(tween: Tween) -> Tween:
-	if is_instance_valid(tween) and tween.is_valid():
-		tween.kill()
-	return create_tween()
+	var target_translation := Vector3(position.x, position.y, position.z - 1.5)
+	_translating_tween.tween_property(self, "position", target_translation, flipping_duration / 2.0)

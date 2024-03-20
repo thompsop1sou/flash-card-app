@@ -24,6 +24,7 @@ shader_parameter/card_texture = SubResource("ViewportTexture_axqd0")
 
 [node name="Card" type="Node3D"]
 script = ExtResource("1_hwh7a")
+flipping_duration = 0.33
 
 [node name="FrontMesh" type="MeshInstance3D" parent="."]
 material_override = SubResource("ShaderMaterial_1tqxt")

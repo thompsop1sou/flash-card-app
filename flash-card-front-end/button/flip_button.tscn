@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://cn6nskcwm6bau"]
+
+[ext_resource type="Script" path="res://button/depress_button.gd" id="1_xdm00"]
+[ext_resource type="ArrayMesh" uid="uid://08jlqxpjxlh1" path="res://button/flip.res" id="2_oiy5w"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kjiau"]
+albedo_color = Color(0.501961, 0.501961, 0.501961, 1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_48bgt"]
+points = PackedVector3Array(-0.5, -0.0500685, -2.98023e-08, -0.5, -0.0500685, 0.19998, -0.483066, 0.079356, -2.98023e-08, -0.483066, -0.179493, -2.98023e-08, -0.250098, 0.382997, 0.2, -0.483066, 0.079356, 0.19998, -0.483066, -0.179493, 0.19998, -0.433046, 0.199951, -2.98023e-08, -0.433046, -0.300088, -2.98023e-08, 0.5, -0.0500685, 0.19998, 0.346319, 0.349941, 0.19998, -9.79006e-05, 0.55, 0.19998, -0.250098, 0.382997, -2.98023e-08, -0.353563, 0.303534, 0.19998, -0.433046, 0.199951, 0.19998, -0.433046, -0.300088, 0.19998, -0.353563, -0.403671, 0.19998, -0.250098, -0.483134, 0.19998, -0.129503, -0.532987, 0.19998, -9.79006e-05, -0.55, 0.19998, 0.129307, -0.532987, 0.19998, 0.249902, -0.483134, 0.19998, 0.353465, -0.403671, 0.19998, 0.432948, -0.300088, 0.19998, 0.48287, -0.179493, 0.19998, -0.353563, 0.303534, -2.98023e-08, -0.353563, -0.403671, -2.98023e-08, 0.5, -0.0500685, -2.98023e-08, 0.346319, 0.349941, -2.98023e-08, -9.79006e-05, 0.55, -2.98023e-08, -0.250098, -0.483134, -2.98023e-08, -0.129503, -0.532987, -2.98023e-08, -9.79006e-05, -0.55, -2.98023e-08, 0.129307, -0.532987, -2.98023e-08, 0.249902, -0.483134, -2.98023e-08, 0.353465, -0.403671, -2.98023e-08, 0.432948, -0.300088, -2.98023e-08, 0.48287, -0.179493, -2.98023e-08)
+
+[node name="FlipButton" type="Area3D"]
+script = ExtResource("1_xdm00")
+
+[node name="FlipMesh" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_kjiau")
+mesh = ExtResource("2_oiy5w")
+
+[node name="FlipCollision" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_48bgt")

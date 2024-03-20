@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://ce3003fmlq16v"]
+
+[ext_resource type="Script" path="res://button/depress_button.gd" id="1_k3tkk"]
+[ext_resource type="ArrayMesh" uid="uid://d3wehmlp5ud06" path="res://button/arrow_mesh.res" id="2_mgh4w"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4e8dj"]
+albedo_color = Color(0.501961, 0.501961, 0.501961, 1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_gc4j3"]
+points = PackedVector3Array(-0.288681, -0.49999, -2.98023e-08, -0.288681, -0.49999, 0.19998, -0.288681, 0.50001, -2.98023e-08, 0.577344, -8.80361e-05, -2.98023e-08, 0.577344, -8.80361e-05, 0.2, -0.288681, 0.50001, 0.19998)
+
+[node name="ArrowButton" type="Area3D"]
+script = ExtResource("1_k3tkk")
+
+[node name="ArrowMesh" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_4e8dj")
+mesh = ExtResource("2_mgh4w")
+
+[node name="ArrowCollision" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_gc4j3")
