@@ -29,6 +29,11 @@ func _ready() -> void:
 		card_str_pairs.append({"front": "front " + str(i), "back": "back " + str(i)})
 	load_card_str_pairs(card_str_pairs)
 
+# TODO: Just for testing... remove later.
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("upload") and Browser.running:
+		Browser.upload(func (results: String): load_card_str_pairs(JSON.parse_string(results)))
+
 # Called when the left arrow is pressed.
 func _on_left_arrow_pressed() -> void:
 	if not changing:
@@ -80,17 +85,23 @@ func move_to_center(stack: Stack):
 		return false
 
 # Function loads up a set of flashcards to the table.
-func load_card_str_pairs(card_str_pairs: Array[Dictionary]) -> void:
+func load_card_str_pairs(card_str_pairs: Array) -> void:
 	# Ensure the data passed in is valid
 	for card_str_pair in card_str_pairs:
 		if not card_str_pair.has("front") or not card_str_pair.has("back"):
-			printerr("Attempted to load up a set of flashcards with bad data:
-	Index = ", card_str_pairs.find(card_str_pair), "
-	Data = ", card_str_pair)
+			Browser.console.error("Attempted to load up a set of flashcards with bad data:\n" +
+				"    Index = " + str(card_str_pairs.find(card_str_pair)) + "\n" +
+				"    Data = " + str(card_str_pair))
 			return
 	# Clear the current stacks
 	draw_stack.clear()
+	for child in draw_stack.get_children():
+		child.queue_free()
 	discard_stack.clear()
+	for child in discard_stack.get_children():
+		child.queue_free()
+	for child in center_card_spot.get_children():
+		child.queue_free()
 	# Add the cards that were passed in
 	for card_str_pair in card_str_pairs:
 		var new_card: Card = card_scene.instantiate() as Card

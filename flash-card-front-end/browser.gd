@@ -17,16 +17,16 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if running:
 		# Check all of the results
-		var num_results = JavaScriptBridge.eval("results.length")
-		var to_delete: Array[int] = []
+		var num_results = callbacks.size()
+		var indices_to_delete: Array[int] = []
 		for i in range(num_results):
 			# Handle results that are done
 			if JavaScriptBridge.eval("results[" + str(i) + "].done"):
-				console.log("will delete " + str(i))
+				indices_to_delete.append(i)
 				var result_value = JavaScriptBridge.eval("results[" + str(i) + "].value")
-				callbacks[i].call(result_value)
+				callbacks[i].call_deferred(result_value)
 		# Delete any results that were done
-		for i in to_delete:
+		for i in indices_to_delete:
 			JavaScriptBridge.eval("results.splice(" + str(i) + ", 1)")
 			callbacks.remove_at(i)
 
@@ -41,30 +41,20 @@ func download(text: String, filename: String, type: String) -> void:
 func upload(callback: Callable) -> void:
 	if running:
 		callbacks.append(callback)
-		JavaScriptBridge.eval("const uploader = document.createElement('INPUT');
-			uploader.type = 'file';
-			uploader.click();
-			console.log('results: ', results);
-			const i = results.length;
-			results.push({done: false, value: null});
-			uploader.addEventListener('change', () => {
-				if (uploader.files.length == 0) {
-					results[i].done = true;
-				} else {
-					uploader.files[0].text().then((value) => {
-						results[i].done = true;
-						results[i].value = value;
-					}, (error) => {
-						results[i].done = true;
-					});
-				}
-			});")
-
-# TODO: For testing... this should actually swap the card set on the table
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("upload") and running:
-		upload(temp)
-
-# TODO: For testing... this should actually swap the card set on the table
-func temp(results: String) -> void:
-	console.log(results)
+		JavaScriptBridge.eval("const uploader = document.createElement('INPUT');\n" +
+			"uploader.type = 'file';\n" +
+			"uploader.click();\n" +
+			"const i = results.length;\n" +
+			"results.push({done: false, value: null});\n" +
+			"uploader.addEventListener('change', () => {\n" +
+			"	if (uploader.files.length == 0) {\n" +
+			"		results[i].done = true;\n" +
+			"	} else {\n" +
+			"		uploader.files[0].text().then((value) => {\n" +
+			"			results[i].done = true;\n" +
+			"			results[i].value = value;\n" +
+			"		}, (error) => {\n" +
+			"			results[i].done = true;\n" +
+			"		});\n" +
+			"	}\n" +
+			"});")
