@@ -30,6 +30,12 @@ func _process(delta: float) -> void:
 			JavaScriptBridge.eval("results.splice(" + str(i) + ", 1)")
 			callbacks.remove_at(i)
 
+func alert(text: String) -> void:
+	if running:
+		JavaScriptBridge.eval("alert(`" + text + "`)")
+	else:
+		print(text)
+
 func download(text: String, filename: String, type: String) -> void:
 	if running:
 		JavaScriptBridge.eval("const downloader = document.createElement('a');\n" +
@@ -37,6 +43,8 @@ func download(text: String, filename: String, type: String) -> void:
 			"downloader.target = '_blank';\n" +
 			"downloader.download = '" + filename + "';\n" +
 			"downloader.click();")
+	else:
+		printerr("Cannot download without a browser.")
 
 func upload(callback: Callable) -> void:
 	if running:
@@ -58,3 +66,5 @@ func upload(callback: Callable) -> void:
 			"		});\n" +
 			"	}\n" +
 			"});")
+	else:
+		printerr("Cannot upload without a browser.")

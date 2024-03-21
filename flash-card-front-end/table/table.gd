@@ -99,13 +99,13 @@ func move_to_center(stack: Stack):
 		return false
 
 # Function loads up a set of flashcards to the table.
-func load_card_str_pairs(card_str_pairs: Array) -> void:
+func load_card_str_pairs(card_str_pairs) -> void:
 	# Ensure the data passed in is valid
+	if typeof(card_str_pairs) != TYPE_ARRAY:
+		Browser.alert("Error loading flashcard set: Data is not an array.")
 	for card_str_pair in card_str_pairs:
-		if not card_str_pair.has("front") or not card_str_pair.has("back"):
-			Browser.console.error("Attempted to load up a set of flashcards with bad data:\n" +
-				"    Index = " + str(card_str_pairs.find(card_str_pair)) + "\n" +
-				"    Data = " + str(card_str_pair))
+		if typeof(card_str_pair) != TYPE_DICTIONARY or not card_str_pair.has("front") or not card_str_pair.has("back"):
+			Browser.alert("Error loading flashcard set: Bad data at index " + str(card_str_pairs.find(card_str_pair)) + ".")
 			return
 	# Clear the current stacks
 	draw_stack.clear()
