@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cn6nskcwm6bau"]
 
-[ext_resource type="Script" path="res://button/depress_button.gd" id="1_xdm00"]
-[ext_resource type="ArrayMesh" uid="uid://08jlqxpjxlh1" path="res://button/flip.res" id="2_oiy5w"]
+[ext_resource type="Script" path="res://buttons/depress_button.gd" id="1_xdm00"]
+[ext_resource type="ArrayMesh" uid="uid://08jlqxpjxlh1" path="res://buttons/models/flip_mesh.res" id="2_oiy5w"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kjiau"]
 albedo_color = Color(0.501961, 0.501961, 0.501961, 1)

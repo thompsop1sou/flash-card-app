@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bqkpfhp2xngyh"
-path="res://.godot/imported/flip.blend-343cb0efe9c1e9774535ca95a2ae208c.scn"
+uid="uid://c6djl7cgijge1"
+path="res://.godot/imported/arrow.blend-1082d964971eda2eb0bb31810a6029e1.scn"
 
 [deps]
 
-source_file="res://button/flip.blend"
-dest_files=["res://.godot/imported/flip.blend-343cb0efe9c1e9774535ca95a2ae208c.scn"]
+source_file="res://buttons/models/arrow.blend"
+dest_files=["res://.godot/imported/arrow.blend-1082d964971eda2eb0bb31810a6029e1.scn"]
 
 [params]
 
@@ -31,7 +31,7 @@ animation/remove_immutable_tracks=true
 import_script/path=""
 _subresources={
 "meshes": {
-"flip_Flip": {
+"arrow_Arrow": {
 "generate/lightmap_uv": 0,
 "generate/lods": 0,
 "generate/shadow_meshes": 0,
@@ -39,7 +39,7 @@ _subresources={
 "lods/normal_split_angle": 25.0,
 "save_to_file/enabled": true,
 "save_to_file/make_streamable": "",
-"save_to_file/path": "res://button/flip.res"
+"save_to_file/path": "res://buttons/models/arrow_mesh.res"
 }
 }
 }

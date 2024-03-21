@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://d1sol4nwv1ofg"]
+
+[ext_resource type="Script" path="res://buttons/depress_button.gd" id="1_nt5ko"]
+[ext_resource type="ArrayMesh" uid="uid://ds78klrwwx85r" path="res://buttons/models/download_mesh.res" id="2_kf2g4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4e8dj"]
+albedo_color = Color(0.501961, 0.501961, 0.501961, 1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_kgpaf"]
+points = PackedVector3Array(-0.5, -0.5, -2.98023e-07, 0.499995, -0.5, -2.98023e-07, -0.5, -0.5, 0.199981, -0.5, 0.0999412, -2.98023e-07, 0.499995, -0.5, 0.199981, 0.499995, 0.0999412, -2.98023e-07, -0.100041, 0.5, 0.2, -0.5, 0.0999412, 0.199981, -0.100041, 0.5, -2.98023e-07, 0.499995, 0.0999412, 0.199981, 0.0999381, 0.5, 0.2, 0.0999381, 0.5, -2.98023e-07)
+
+[node name="DownloadButton" type="Area3D"]
+script = ExtResource("1_nt5ko")
+
+[node name="DownloadMesh" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_4e8dj")
+mesh = ExtResource("2_kf2g4")
+
+[node name="DownloadCollision" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_kgpaf")

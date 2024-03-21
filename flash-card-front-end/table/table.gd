@@ -21,52 +21,7 @@ var card_scene := preload("res://card/card.tscn")
 
 
 
-# METHODS
-
-# TODO: Just for testing... remove later.
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("download") and Browser.running:
-		Browser.download(JSON.stringify(save_card_str_pairs(), "    "), "flashcards.json", "json")
-	if event.is_action_pressed("upload") and Browser.running:
-		Browser.upload(func (results: String): load_card_str_pairs(JSON.parse_string(results)))
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	# Add some demo cards to the draw stack
-	var card_str_pairs: Array[Dictionary] = []
-	for i in range(10):
-		card_str_pairs.append({"front": "front " + str(i), "back": "back " + str(i)})
-	load_card_str_pairs(card_str_pairs)
-
-# Called when the left arrow is pressed.
-func _on_left_arrow_pressed() -> void:
-	# Only do something if not already in the process of changing
-	if not changing:
-		changing = true
-		# Try to flip the center card first
-		var flipped_center = flip_center(Card.Orientation.FRONT)
-		# If that doesn't work, try moving the cards
-		if not flipped_center:
-			var moved_from_center = move_from_center(draw_stack)
-			var moved_to_center = move_to_center(discard_stack)
-			# If neither of those works, indicate that nothing is changing
-			if not moved_from_center and not moved_to_center:
-				changing = false
-
-# Called when the right arrow is pressed.
-func _on_right_arrow_pressed() -> void:
-	# Only do something if not already in the process of changing
-	if not changing:
-		changing = true
-		# Try to flip the center card first
-		var flipped_center = flip_center(Card.Orientation.BACK)
-		# If that doesn't work, try moving the cards
-		if not flipped_center:
-			var moved_from_center = move_from_center(discard_stack)
-			var moved_to_center = move_to_center(draw_stack)
-			# If neither of those works, indicate that nothing is changing
-			if not moved_from_center and not moved_to_center:
-				changing = false
+# PUBLIC METHODS
 
 # Tries to flip the center card. Returns true if successful.
 func flip_center(target_orientation: Card.Orientation) -> bool:
@@ -149,3 +104,60 @@ func save_card_str_pairs() -> Array[Dictionary]:
 		card_str_pairs.append({"front": card.front_text, "back": card.back_text})
 	# Return everything that was accumulated
 	return card_str_pairs
+
+
+
+# PRIVATE METHODS
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	# Add some demo cards to the draw stack
+	var card_str_pairs: Array[Dictionary] = []
+	for i in range(10):
+		card_str_pairs.append({"front": "front " + str(i), "back": "back " + str(i)})
+	load_card_str_pairs(card_str_pairs)
+
+# Called when the left arrow is pressed.
+func _on_left_arrow_pressed() -> void:
+	# Only do something if not already in the process of changing
+	if not changing:
+		changing = true
+		# Try to flip the center card first
+		var flipped_center = flip_center(Card.Orientation.FRONT)
+		# If that doesn't work, try moving the cards
+		if not flipped_center:
+			var moved_from_center = move_from_center(draw_stack)
+			var moved_to_center = move_to_center(discard_stack)
+			# If neither of those works, indicate that nothing is changing
+			if not moved_from_center and not moved_to_center:
+				changing = false
+
+# Called when the right arrow is pressed.
+func _on_right_arrow_pressed() -> void:
+	# Only do something if not already in the process of changing
+	if not changing:
+		changing = true
+		# Try to flip the center card first
+		var flipped_center = flip_center(Card.Orientation.BACK)
+		# If that doesn't work, try moving the cards
+		if not flipped_center:
+			var moved_from_center = move_from_center(discard_stack)
+			var moved_to_center = move_to_center(draw_stack)
+			# If neither of those works, indicate that nothing is changing
+			if not moved_from_center and not moved_to_center:
+				changing = false
+
+# Called when the download button is pressed.
+func _on_download_pressed() -> void:
+	if Browser.is_running:
+		var text: String = JSON.stringify(save_card_str_pairs(), "    ")
+		Browser.download(text, "flashcards.json", "json")
+
+# Called when the upload button is pressed.
+func _on_upload_pressed() -> void:
+	if Browser.is_running:
+		Browser.upload(_upload_callback)
+
+# Definition of the callback function used with Browser.upload().
+func _upload_callback(results: String) -> void:
+	load_card_str_pairs(JSON.parse_string(results))
