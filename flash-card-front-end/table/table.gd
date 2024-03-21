@@ -17,20 +17,6 @@ var card_scene := preload("res://card/card.tscn")
 @onready var center_card_spot: Node3D = $Cards/CenterCardSpot
 @onready var discard_stack: Stack = $Cards/DiscardStack
 
-var js_download_func = "function download(textToSave) {
-	let downloader = document.createElement('a');
-	downloader.href = 'data:text/json;charset=utf-8,' + encodeURIComponent(textToSave);
-	downloader.target = '_blank';
-	downloader.download = 'flashcard_set.json';
-	downloader.click();
-}"
-
-var js_upload_func = "function upload() {
-	let uploader = document.createElement('INPUT');
-	uploader.type = 'file';
-	uploader.click();
-}"
-
 
 
 # METHODS
@@ -42,16 +28,6 @@ func _ready() -> void:
 	for i in range(10):
 		card_str_pairs.append({"front": "front " + str(i), "back": "back " + str(i)})
 	load_card_str_pairs(card_str_pairs)
-	# If in a web build, add the JavaScript functions to the global namespace
-	var card_str_pairs_str: String = JSON.stringify(card_str_pairs, "  ")
-	in_web = OS.has_feature('web')
-	if in_web:
-		JavaScriptBridge.eval(js_download_func, true)
-		JavaScriptBridge.eval(js_upload_func, true)
-		# Try running the JavaScript download function
-		#JavaScriptBridge.eval("download(`" + card_str_pairs_str + "`);")
-		# Try running the JavaScript upload function
-		JavaScriptBridge.eval("upload();")
 
 # Called when the left arrow is pressed.
 func _on_left_arrow_pressed() -> void:
