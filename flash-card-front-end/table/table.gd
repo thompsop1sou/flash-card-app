@@ -36,19 +36,33 @@ func _input(event: InputEvent) -> void:
 
 # Called when the left arrow is pressed.
 func _on_left_arrow_pressed() -> void:
+	# Only do something if not already in the process of changing
 	if not changing:
 		changing = true
-		if not flip_center(Card.Orientation.FRONT):
-			move_from_center(draw_stack)
-			move_to_center(discard_stack)
+		# Try to flip the center card first
+		var flipped_center = flip_center(Card.Orientation.FRONT)
+		# If that doesn't work, try moving the cards
+		if not flipped_center:
+			var moved_from_center = move_from_center(draw_stack)
+			var moved_to_center = move_to_center(discard_stack)
+			# If neither of those works, indicate that nothing is changing
+			if not moved_from_center and not moved_to_center:
+				changing = false
 
 # Called when the right arrow is pressed.
 func _on_right_arrow_pressed() -> void:
+	# Only do something if not already in the process of changing
 	if not changing:
 		changing = true
-		if not flip_center(Card.Orientation.BACK):
-			move_from_center(discard_stack)
-			move_to_center(draw_stack)
+		# Try to flip the center card first
+		var flipped_center = flip_center(Card.Orientation.BACK)
+		# If that doesn't work, try moving the cards
+		if not flipped_center:
+			var moved_from_center = move_from_center(discard_stack)
+			var moved_to_center = move_to_center(draw_stack)
+			# If neither of those works, indicate that nothing is changing
+			if not moved_from_center and not moved_to_center:
+				changing = false
 
 # Tries to flip the center card. Returns true if successful.
 func flip_center(target_orientation: Card.Orientation) -> bool:
