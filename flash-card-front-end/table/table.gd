@@ -9,11 +9,27 @@ var card_moving_duration: float = 0.25
 
 var changing: bool = false
 
+var in_web: bool = true
+
 var card_scene := preload("res://card/card.tscn")
 
 @onready var draw_stack: Stack = $Cards/DrawStack
 @onready var center_card_spot: Node3D = $Cards/CenterCardSpot
 @onready var discard_stack: Stack = $Cards/DiscardStack
+
+var js_download_func = "function download(textToSave) {
+	let downloader = document.createElement('a');
+	downloader.href = 'data:text/json;charset=utf-8,' + encodeURIComponent(textToSave);
+	downloader.target = '_blank';
+	downloader.download = 'flashcard_set.json';
+	downloader.click();
+}"
+
+var js_upload_func = "function upload() {
+	let uploader = document.createElement('INPUT');
+	uploader.type = 'file';
+	uploader.click();
+}"
 
 
 
@@ -22,15 +38,20 @@ var card_scene := preload("res://card/card.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Add some demo cards to the draw stack
+	var card_str_pairs: Array[Dictionary] = []
 	for i in range(10):
-		var new_card: Card = card_scene.instantiate() as Card
-		new_card.front_text = "front " + str(i)
-		new_card.back_text = "back " + str(i)
-		draw_stack.push_card(new_card)
-		draw_stack.add_child(new_card)
-		new_card.position = draw_stack.get_top_position()
-		if new_card.get_orientation() == Card.Orientation.BACK:
-			new_card.flip_orientation(false)
+		card_str_pairs.append({"front": "front " + str(i), "back": "back " + str(i)})
+	load_card_str_pairs(card_str_pairs)
+	# If in a web build, add the JavaScript functions to the global namespace
+	var card_str_pairs_str: String = JSON.stringify(card_str_pairs, "  ")
+	in_web = OS.has_feature('web')
+	if in_web:
+		JavaScriptBridge.eval(js_download_func, true)
+		JavaScriptBridge.eval(js_upload_func, true)
+		# Try running the JavaScript download function
+		#JavaScriptBridge.eval("download(`" + card_str_pairs_str + "`);")
+		# Try running the JavaScript upload function
+		JavaScriptBridge.eval("upload();")
 
 # Called when the left arrow is pressed.
 func _on_left_arrow_pressed() -> void:
@@ -81,3 +102,26 @@ func move_to_center(stack: Stack):
 		return true
 	else:
 		return false
+
+# Function loads up a set of flashcards to the table.
+func load_card_str_pairs(card_str_pairs: Array[Dictionary]) -> void:
+	# Ensure the data passed in is valid
+	for card_str_pair in card_str_pairs:
+		if not card_str_pair.has("front") or not card_str_pair.has("back"):
+			printerr("Attempted to load up a set of flashcards with bad data:
+	Index = ", card_str_pairs.find(card_str_pair), "
+	Data = ", card_str_pair)
+			return
+	# Clear the current stacks
+	draw_stack.clear()
+	discard_stack.clear()
+	# Add the cards that were passed in
+	for card_str_pair in card_str_pairs:
+		var new_card: Card = card_scene.instantiate() as Card
+		new_card.front_text = card_str_pair["front"]
+		new_card.back_text = card_str_pair["back"]
+		draw_stack.push_card(new_card)
+		draw_stack.add_child(new_card)
+		new_card.position = draw_stack.get_top_position()
+		if new_card.get_orientation() == Card.Orientation.BACK:
+			new_card.flip_orientation(false)
