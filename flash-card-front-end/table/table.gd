@@ -4,15 +4,17 @@ extends Node3D
 
 # PROPERTIES
 
+## How long it takes for cards to move from one stack to another.
 @export_range(0.0, 1.0, 0.01, "or_greater", "suffix:s")
 var card_moving_duration: float = 0.25
 
+## Whether this table is currently changing the positions of cards.
 var changing: bool = false
 
-var in_web: bool = true
-
+# Preload the card scene.
 var card_scene := preload("res://card/card.tscn")
 
+# Keep a reference to the various stacks on the table.
 @onready var draw_stack: Stack = $Cards/DrawStack
 @onready var center_card_spot: Node3D = $Cards/CenterCardSpot
 @onready var discard_stack: Stack = $Cards/DiscardStack
@@ -31,6 +33,8 @@ func _ready() -> void:
 
 # TODO: Just for testing... remove later.
 func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("download") and Browser.running:
+		Browser.download("This is a test!", "test.txt", "plain")
 	if event.is_action_pressed("upload") and Browser.running:
 		Browser.upload(func (results: String): load_card_str_pairs(JSON.parse_string(results)))
 
