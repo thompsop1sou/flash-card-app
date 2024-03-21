@@ -37,3 +37,7 @@ func pop_card() -> Card:
 ## Clears all cards out of the stack.
 func clear() -> void:
 	_cards.clear()
+
+## Returns a duplicate of the array of cards in this stack.
+func get_cards() -> Array[Card]:
+	return _cards.duplicate()

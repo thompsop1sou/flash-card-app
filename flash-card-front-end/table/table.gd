@@ -23,6 +23,13 @@ var card_scene := preload("res://card/card.tscn")
 
 # METHODS
 
+# TODO: Just for testing... remove later.
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("download") and Browser.running:
+		Browser.download(JSON.stringify(save_card_str_pairs(), "    "), "flashcards.json", "json")
+	if event.is_action_pressed("upload") and Browser.running:
+		Browser.upload(func (results: String): load_card_str_pairs(JSON.parse_string(results)))
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Add some demo cards to the draw stack
@@ -30,13 +37,6 @@ func _ready() -> void:
 	for i in range(10):
 		card_str_pairs.append({"front": "front " + str(i), "back": "back " + str(i)})
 	load_card_str_pairs(card_str_pairs)
-
-# TODO: Just for testing... remove later.
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("download") and Browser.running:
-		Browser.download("This is a test!", "test.txt", "plain")
-	if event.is_action_pressed("upload") and Browser.running:
-		Browser.upload(func (results: String): load_card_str_pairs(JSON.parse_string(results)))
 
 # Called when the left arrow is pressed.
 func _on_left_arrow_pressed() -> void:
@@ -102,7 +102,7 @@ func move_to_center(stack: Stack):
 	else:
 		return false
 
-# Function loads up a set of flashcards to the table.
+# Function loads up a new set of flashcards to the table.
 func load_card_str_pairs(card_str_pairs) -> void:
 	# Ensure the data passed in is valid
 	if typeof(card_str_pairs) != TYPE_ARRAY:
@@ -121,7 +121,8 @@ func load_card_str_pairs(card_str_pairs) -> void:
 	for child in center_card_spot.get_children():
 		child.queue_free()
 	# Add the cards that were passed in
-	for card_str_pair in card_str_pairs:
+	card_str_pairs.reverse()
+	for card_str_pair: Dictionary in card_str_pairs:
 		var new_card: Card = card_scene.instantiate() as Card
 		new_card.front_text = card_str_pair["front"]
 		new_card.back_text = card_str_pair["back"]
@@ -130,3 +131,21 @@ func load_card_str_pairs(card_str_pairs) -> void:
 		new_card.position = draw_stack.get_top_position()
 		if new_card.get_orientation() == Card.Orientation.BACK:
 			new_card.flip_orientation(false)
+
+# Function saves the current set of flashcards as an array of dictionaries.
+func save_card_str_pairs() -> Array[Dictionary]:
+	var card_str_pairs: Array[Dictionary] = []
+	# Add cards from the discard stack
+	for card: Card in discard_stack.get_cards():
+		card_str_pairs.append({"front": card.front_text, "back": card.back_text})
+	# Add the center card (if there is one)
+	var center_card = Utilities.find_first_child(center_card_spot, "Card")
+	if is_instance_valid(center_card):
+		card_str_pairs.append({"front": center_card.front_text, "back": center_card.back_text})
+	# Add cards from the draw stack
+	var draw_cards: Array[Card] = draw_stack.get_cards()
+	draw_cards.reverse()
+	for card: Card in draw_cards:
+		card_str_pairs.append({"front": card.front_text, "back": card.back_text})
+	# Return everything that was accumulated
+	return card_str_pairs
