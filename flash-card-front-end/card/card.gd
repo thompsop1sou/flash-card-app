@@ -41,6 +41,11 @@ enum Orientation {FRONT, TO_FRONT, BACK, TO_BACK}
 # The current orientation of the card.
 var _orientation := Orientation.FRONT
 
+# The rotation angles corresponding to front and back orientation
+const _epsilon: float = PI / (180.0 * 60.0)  # 1/60th of a degree
+var _front_angle: float = _epsilon
+var _back_angle: float = PI - _epsilon
+
 # Keep references to the front and back labels.
 @onready var _front_label: Label = $FrontMesh/FrontViewport/FrontLabel
 @onready var _back_label: Label = $BackMesh/BackViewport/BackLabel
@@ -57,10 +62,10 @@ func flip_orientation(animated: bool = true, callback: Callable = Callable()) ->
 		match _orientation:
 			# Flip the card to the back if currently on the front
 			Card.Orientation.FRONT:
-				_animate_card_flip(PI, Card.Orientation.BACK, callback)
+				_animate_card_flip(_back_angle, Card.Orientation.BACK, callback)
 			# Flip the card to the front if currently on the back
 			Card.Orientation.BACK:
-				_animate_card_flip(0.0, Card.Orientation.FRONT, callback)
+				_animate_card_flip(_front_angle, Card.Orientation.FRONT, callback)
 			# Don't do anything if the card is currently changing
 			_:
 				pass
@@ -69,12 +74,12 @@ func flip_orientation(animated: bool = true, callback: Callable = Callable()) ->
 		match _orientation:
 			# Flip the card to the back if currently on the front
 			Card.Orientation.FRONT:
-				rotation.y = PI
+				rotation.y = _back_angle
 				_orientation = Card.Orientation.BACK
 				callback.call()
 			# Flip the card to the front if currently on the back
 			Card.Orientation.BACK:
-				rotation.y = 0
+				rotation.y = _front_angle
 				_orientation = Card.Orientation.FRONT
 				callback.call()
 			# Don't do anything if the card is currently changing
@@ -95,6 +100,9 @@ func _ready() -> void:
 	# Make sure the text on the labels is correct
 	front_text = front_text
 	back_text = back_text
+	# Set it up to be rotated toward the front
+	rotation.y = _front_angle
+	_orientation = Card.Orientation.FRONT
 
 # Sets up the tweens for animating the card flip.
 func _animate_card_flip(rotation_y: float, orientation: Card.Orientation, callback: Callable) -> void:
