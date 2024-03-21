@@ -29,14 +29,14 @@ mesh = SubResource("BoxMesh_y1v7i")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="DrawStack" type="Node3D" parent="Cards"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0.05)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
 script = ExtResource("2_6a2tr")
 
 [node name="CenterCardSpot" type="Node3D" parent="Cards"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.05)
 
 [node name="DiscardStack" type="Node3D" parent="Cards"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0.05)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
 script = ExtResource("2_6a2tr")
 
 [node name="Buttons" type="Node3D" parent="."]
@@ -55,22 +55,24 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 4, 7)
+transform = Transform3D(0.965926, 0.12941, -0.224144, 0, 0.866025, 0.5, 0.258819, -0.482963, 0.836516, 0, 4, 2)
 shadow_enabled = true
-shadow_bias = 0.0
-shadow_reverse_cull_face = true
 directional_shadow_mode = 0
-directional_shadow_max_distance = 10.0
+directional_shadow_fade_start = 1.0
+directional_shadow_max_distance = 6.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_84wpw")
 
 [node name="CameraPivot" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.996195, -0.0871557, 0, 0.0871557, 0.996195, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.98023e-08, 2)
+projection = 1
 fov = 60.0
+size = 9.0
+far = 3.0
 
 [connection signal="pressed" from="Buttons/LeftArrow" to="." method="_on_left_arrow_pressed"]
 [connection signal="pressed" from="Buttons/RightArrow" to="." method="_on_right_arrow_pressed"]
