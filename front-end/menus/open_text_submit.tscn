@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://b45kjj8neehbj"]
+
+[ext_resource type="PackedScene" uid="uid://cxua6gul8e1d7" path="res://menus/text_submit.tscn" id="1_ojjtp"]
+
+[node name="OpenTextSubmit" instance=ExtResource("1_ojjtp")]
+label_text = "Enter the name of a flashcard set to open:"
+placeholder_text = "My Flashcard Set"
+button_text = "Open"
+
+[node name="Label" parent="MarginContainer/VBoxContainer" index="0"]
+text = "Enter the name of a flashcard set to open:"
+
+[node name="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer" index="0"]
+placeholder_text = "My Flashcard Set"
+
+[node name="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" index="1"]
+text = "Open"

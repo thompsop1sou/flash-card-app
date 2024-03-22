@@ -13,8 +13,6 @@ var _mesh: MeshInstance3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# Make sure everything is set up for Button3D
-	super()
 	# Find the mesh
 	_mesh = Utilities.find_first_child(self, "MeshInstance3D") as MeshInstance3D
 	if not is_instance_valid(_mesh):

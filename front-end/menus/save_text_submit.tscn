@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://hxst45bbn0v4"]
+
+[ext_resource type="PackedScene" uid="uid://cxua6gul8e1d7" path="res://menus/text_submit.tscn" id="1_cwbeh"]
+
+[node name="SaveTextSubmit" instance=ExtResource("1_cwbeh")]
+label_text = "Enter a name for saving this flashcard set:"
+placeholder_text = "My Flashcard Set"
+button_text = "Save"
+
+[node name="Label" parent="MarginContainer/VBoxContainer" index="0"]
+text = "Enter a name for saving this flashcard set:"
+
+[node name="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer" index="0"]
+placeholder_text = "My Flashcard Set"
+
+[node name="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" index="1"]
+text = "Save"

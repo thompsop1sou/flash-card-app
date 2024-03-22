@@ -19,6 +19,9 @@ var card_scene := preload("res://card/card.tscn")
 @onready var center_card_spot: Node3D = $Cards/CenterCardSpot
 @onready var discard_stack: Stack = $Cards/DiscardStack
 
+# Keep a reference to the menu manager
+@onready var menu_manager: Control = $MenuManager
+
 
 
 # PUBLIC METHODS
@@ -118,13 +121,27 @@ func _ready() -> void:
 		card_str_pairs.append({"front": "front " + str(i), "back": "back " + str(i)})
 	load_card_str_pairs(card_str_pairs)
 
+# Disables all buttons.
+func _disable_buttons() -> void:
+	for button: Button3D in $Buttons.get_children():
+		button.enabled = false
+
+# Enables all buttons.
+func _enable_buttons() -> void:
+	for button: Button3D in $Buttons.get_children():
+		button.enabled = true
+
 # Called when the open button is pressed.
 func _on_open_pressed() -> void:
-	Browser.console_log("open")
+	_disable_buttons()
+	await menu_manager.open()
+	_enable_buttons()
 
 # Called when the save button is pressed.
 func _on_save_pressed() -> void:
-	Browser.console_log("save")
+	_disable_buttons()
+	await menu_manager.save()
+	_enable_buttons()
 
 # Called when the left arrow is pressed.
 func _on_left_arrow_pressed() -> void:

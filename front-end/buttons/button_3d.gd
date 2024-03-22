@@ -15,6 +15,19 @@ signal up()
 ## Emitted when the button is pressed.
 signal pressed()
 
+## Whether this button can be pressed.
+@export
+var enabled: bool = true:
+	get:
+		return enabled
+	set(value):
+		enabled = value
+		if not enabled:
+			_mouse_over = false
+			if _down:
+				_down = false
+				up.emit()
+
 
 
 # PRIVATE PROPERTIES
@@ -41,26 +54,23 @@ func is_down() -> bool:
 
 # PRIVATE METHODS
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	mouse_entered.connect(_on_mouse_entered)
-	mouse_exited.connect(_on_mouse_exited)
-
 # Called when the mouse enters the area of this button.
-func _on_mouse_entered():
-	_mouse_over = true
+func _mouse_enter():
+	if enabled:
+		_mouse_over = true
 
 # Called when the mouse exits the area of this button.
-func _on_mouse_exited():
-	_mouse_over = false
-	if _down:
-		_down = false
-		up.emit()
+func _mouse_exit():
+	if enabled:
+		_mouse_over = false
+		if _down:
+			_down = false
+			up.emit()
 
 # Handle mouse button clicks.
 func _input(event: InputEvent) -> void:
 	var mouse_button_event: InputEventMouseButton = event as InputEventMouseButton
-	if is_instance_valid(mouse_button_event) and _mouse_over:
+	if is_instance_valid(mouse_button_event) and _mouse_over and enabled:
 		if mouse_button_event.pressed:
 			_down = true
 			down.emit()
