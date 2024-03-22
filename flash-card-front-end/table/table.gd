@@ -118,8 +118,31 @@ func _ready() -> void:
 		card_str_pairs.append({"front": "front " + str(i), "back": "back " + str(i)})
 	load_card_str_pairs(card_str_pairs)
 
-# Called when the reset button is pressed.
-func _on_reset_pressed() -> void:
+# Called when the fetch button is pressed.
+func _on_fetch_pressed() -> void:
+	print("fetch")
+
+# Called when the send button is pressed.
+func _on_send_pressed() -> void:
+	print("send")
+
+# Called when the left arrow is pressed.
+func _on_left_arrow_pressed() -> void:
+	# Only do something if not already in the process of changing
+	if not changing:
+		changing = true
+		# Try to flip the center card first
+		var flipped_center = flip_center(Card.Orientation.FRONT)
+		# If that doesn't work, try moving the cards
+		if not flipped_center:
+			var moved_from_center = move_from_center(draw_stack)
+			var moved_to_center = move_to_center(discard_stack)
+			# If neither of those works, indicate that nothing is changing
+			if not moved_from_center and not moved_to_center:
+				changing = false
+
+# Called when the loop button is pressed.
+func _on_loop_pressed() -> void:
 	# Move the center card if there is one
 	var center_card: Card = Utilities.find_first_child(center_card_spot, "Card") as Card
 	if is_instance_valid(center_card):
@@ -142,21 +165,6 @@ func _on_reset_pressed() -> void:
 		discard_card.position = draw_stack.get_top_position()
 		# Get a reference to the next discard card
 		discard_card = discard_stack.pop_card()
-
-# Called when the left arrow is pressed.
-func _on_left_arrow_pressed() -> void:
-	# Only do something if not already in the process of changing
-	if not changing:
-		changing = true
-		# Try to flip the center card first
-		var flipped_center = flip_center(Card.Orientation.FRONT)
-		# If that doesn't work, try moving the cards
-		if not flipped_center:
-			var moved_from_center = move_from_center(draw_stack)
-			var moved_to_center = move_to_center(discard_stack)
-			# If neither of those works, indicate that nothing is changing
-			if not moved_from_center and not moved_to_center:
-				changing = false
 
 # Called when the right arrow is pressed.
 func _on_right_arrow_pressed() -> void:

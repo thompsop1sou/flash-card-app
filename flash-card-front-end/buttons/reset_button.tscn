@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cn6nskcwm6bau"]
+[gd_scene load_steps=4 format=3 uid="uid://cn6nskcwm6bau"]
 
 [ext_resource type="Script" path="res://buttons/depress_button.gd" id="1_xdm00"]
 [ext_resource type="Material" uid="uid://ij3gj1g3enu4" path="res://buttons/button_material.tres" id="2_iifp4"]
-[ext_resource type="ArrayMesh" uid="uid://djfuybks00573" path="res://buttons/models/reset_mesh.res" id="2_jg6mm"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_32h67"]
 points = PackedVector3Array(-0.5, -6.84857e-05, -2.98023e-08, -0.5, -6.84857e-05, 0.19998, -0.346515, 0.399941, -2.98023e-08, -0.483066, -0.129493, -2.98023e-08, 0.249902, 0.432997, 0.2, -0.346515, 0.399941, 0.19998, -0.483066, -0.129493, 0.19998, -9.79006e-05, 0.6, -2.98023e-08, -0.433046, -0.250088, -2.98023e-08, 0.5, -6.84857e-05, 0.19998, 0.48287, 0.129356, 0.19998, 0.432948, 0.249951, 0.19998, 0.353465, 0.353534, 0.19998, 0.249902, 0.432997, -2.98023e-08, -9.79006e-05, 0.6, 0.19998, -0.433046, -0.250088, 0.19998, -0.353563, -0.353671, 0.19998, -0.250098, -0.433134, 0.19998, -0.129503, -0.482987, 0.19998, -9.79006e-05, -0.5, 0.19998, 0.129307, -0.482987, 0.19998, 0.249902, -0.433134, 0.19998, 0.353465, -0.353671, 0.19998, 0.432948, -0.250088, 0.19998, 0.48287, -0.129493, 0.19998, -0.353563, -0.353671, -2.98023e-08, 0.5, -6.84857e-05, -2.98023e-08, 0.48287, 0.129356, -2.98023e-08, 0.432948, 0.249951, -2.98023e-08, 0.353465, 0.353534, -2.98023e-08, -0.250098, -0.433134, -2.98023e-08, -0.129503, -0.482987, -2.98023e-08, -9.79006e-05, -0.5, -2.98023e-08, 0.129307, -0.482987, -2.98023e-08, 0.249902, -0.433134, -2.98023e-08, 0.353465, -0.353671, -2.98023e-08, 0.432948, -0.250088, -2.98023e-08, 0.48287, -0.129493, -2.98023e-08)
@@ -13,7 +12,6 @@ script = ExtResource("1_xdm00")
 [node name="ResetMesh" type="MeshInstance3D" parent="."]
 material_override = ExtResource("2_iifp4")
 lod_bias = 128.0
-mesh = ExtResource("2_jg6mm")
 
 [node name="ResetCollision" type="CollisionShape3D" parent="."]
 shape = SubResource("ConvexPolygonShape3D_32h67")

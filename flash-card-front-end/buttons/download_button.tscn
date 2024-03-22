@@ -4,8 +4,8 @@
 [ext_resource type="Material" uid="uid://ij3gj1g3enu4" path="res://buttons/button_material.tres" id="2_0osss"]
 [ext_resource type="ArrayMesh" uid="uid://ds78klrwwx85r" path="res://buttons/models/download_mesh.res" id="2_kf2g4"]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_kgpaf"]
-points = PackedVector3Array(-0.5, -0.5, -2.98023e-07, 0.499995, -0.5, -2.98023e-07, -0.5, -0.5, 0.199981, -0.5, 0.0999412, -2.98023e-07, 0.499995, -0.5, 0.199981, 0.499995, 0.0999412, -2.98023e-07, -0.100041, 0.5, 0.2, -0.5, 0.0999412, 0.199981, -0.100041, 0.5, -2.98023e-07, 0.499995, 0.0999412, 0.199981, 0.0999381, 0.5, 0.2, 0.0999381, 0.5, -2.98023e-07)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_t2hbp"]
+points = PackedVector3Array(-0.5, -0.5, -2.98023e-07, 0.499995, -0.5, -2.98023e-07, -0.5, -0.5, 0.199981, -0.5, -9.79304e-05, -2.98023e-07, 0.499995, -0.5, 0.199981, 0.499995, -9.79304e-05, -2.98023e-07, -0.100041, 0.5, 0.2, -0.5, -9.79304e-05, 0.199981, -0.100041, 0.5, -2.98023e-07, 0.499995, -9.79304e-05, 0.199981, 0.0999381, 0.5, 0.2, 0.0999381, 0.5, -2.98023e-07)
 
 [node name="DownloadButton" type="Area3D"]
 script = ExtResource("1_nt5ko")
@@ -16,4 +16,4 @@ lod_bias = 128.0
 mesh = ExtResource("2_kf2g4")
 
 [node name="DownloadCollision" type="CollisionShape3D" parent="."]
-shape = SubResource("ConvexPolygonShape3D_kgpaf")
+shape = SubResource("ConvexPolygonShape3D_t2hbp")
