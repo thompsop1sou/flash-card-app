@@ -2,9 +2,7 @@
 
 [ext_resource type="Script" path="res://buttons/depress_button.gd" id="1_0xvax"]
 [ext_resource type="ArrayMesh" uid="uid://d4d02hlsjbkys" path="res://buttons/models/upload_mesh.res" id="2_3n2nr"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4e8dj"]
-albedo_color = Color(0.501961, 0.501961, 0.501961, 1)
+[ext_resource type="Material" uid="uid://ij3gj1g3enu4" path="res://buttons/button_material.tres" id="2_wuh3h"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ey8ij"]
 points = PackedVector3Array(-0.5, -0.5, -2.98023e-07, 0.499995, -0.5, -2.98023e-07, -0.5, -0.5, 0.199981, -0.5, -9.78708e-05, -2.98023e-07, 0.499995, -0.5, 0.199981, 0.499995, -9.78708e-05, -2.98023e-07, -0.100041, -0.100039, 0.2, -0.5, -9.78708e-05, 0.199981, -0.300021, 0.19998, -2.98023e-07, 0.499995, -9.78708e-05, 0.199981, 0.0999381, -0.100039, 0.2, -2.65241e-06, 0.5, -2.98023e-07, -2.65241e-06, 0.5, 0.199981, -0.300021, 0.19998, 0.199981)
@@ -13,7 +11,7 @@ points = PackedVector3Array(-0.5, -0.5, -2.98023e-07, 0.499995, -0.5, -2.98023e-
 script = ExtResource("1_0xvax")
 
 [node name="UploadMesh" type="MeshInstance3D" parent="."]
-material_override = SubResource("StandardMaterial3D_4e8dj")
+material_override = ExtResource("2_wuh3h")
 lod_bias = 128.0
 mesh = ExtResource("2_3n2nr")
 

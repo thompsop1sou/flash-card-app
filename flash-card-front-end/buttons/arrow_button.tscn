@@ -1,10 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://ce3003fmlq16v"]
 
 [ext_resource type="Script" path="res://buttons/depress_button.gd" id="1_k3tkk"]
+[ext_resource type="Material" uid="uid://ij3gj1g3enu4" path="res://buttons/button_material.tres" id="2_7qjth"]
 [ext_resource type="ArrayMesh" uid="uid://d3wehmlp5ud06" path="res://buttons/models/arrow_mesh.res" id="2_mgh4w"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4e8dj"]
-albedo_color = Color(0.501961, 0.501961, 0.501961, 1)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ekrt7"]
 points = PackedVector3Array(-0.5, -0.5, -2.18557e-08, -0.5, -0.5, 0.19998, -0.5, 0.5, -2.18557e-08, 0.366025, -9.78708e-05, -2.18557e-08, 0.366025, -9.78708e-05, 0.2, -0.5, 0.5, 0.19998)
@@ -13,7 +11,7 @@ points = PackedVector3Array(-0.5, -0.5, -2.18557e-08, -0.5, -0.5, 0.19998, -0.5,
 script = ExtResource("1_k3tkk")
 
 [node name="ArrowMesh" type="MeshInstance3D" parent="."]
-material_override = SubResource("StandardMaterial3D_4e8dj")
+material_override = ExtResource("2_7qjth")
 lod_bias = 128.0
 mesh = ExtResource("2_mgh4w")
 

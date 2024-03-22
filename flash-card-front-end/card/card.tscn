@@ -23,6 +23,7 @@ shader = ExtResource("2_ojait")
 shader_parameter/card_texture = SubResource("ViewportTexture_axqd0")
 
 [node name="Card" type="Node3D"]
+transform = Transform3D(1, 0, 0.000290888, 0, 1, 0, -0.000290888, 0, 1, 0, 0, 0)
 script = ExtResource("1_hwh7a")
 flipping_duration = 0.33
 
@@ -42,7 +43,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 1)
+color = Color(0.12549, 0.12549, 0.12549, 1)
 
 [node name="FrontLabel" type="Label" parent="FrontMesh/FrontViewport"]
 anchors_preset = 15
@@ -75,6 +76,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0.878431, 0.878431, 0.878431, 1)
 
 [node name="BackLabel" type="Label" parent="BackMesh/BackViewport"]
 anchors_preset = 15
