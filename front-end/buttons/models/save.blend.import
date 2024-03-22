@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cjxjn28hip0t4"
-path="res://.godot/imported/fetch.blend-d3a3622bda3abca4406dc64997a1cb0b.scn"
+uid="uid://b20t2ksshhm8t"
+path="res://.godot/imported/save.blend-9983e6361efaf5121ca5a7c1cb5484b9.scn"
 
 [deps]
 
-source_file="res://buttons/models/fetch.blend"
-dest_files=["res://.godot/imported/fetch.blend-d3a3622bda3abca4406dc64997a1cb0b.scn"]
+source_file="res://buttons/models/save.blend"
+dest_files=["res://.godot/imported/save.blend-9983e6361efaf5121ca5a7c1cb5484b9.scn"]
 
 [params]
 
@@ -31,7 +31,7 @@ animation/remove_immutable_tracks=true
 import_script/path=""
 _subresources={
 "meshes": {
-"fetch_Fetch": {
+"save_Save": {
 "generate/lightmap_uv": 0,
 "generate/lods": 0,
 "generate/shadow_meshes": 0,
@@ -39,7 +39,7 @@ _subresources={
 "lods/normal_split_angle": 25.0,
 "save_to_file/enabled": true,
 "save_to_file/make_streamable": "",
-"save_to_file/path": "res://buttons/models/fetch_mesh.res"
+"save_to_file/path": "res://buttons/models/save_mesh.res"
 }
 }
 }

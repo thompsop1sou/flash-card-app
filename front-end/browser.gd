@@ -7,9 +7,6 @@ extends Node
 ## Whether the game is currently running in a browser.
 var is_running: bool = false
 
-## Can be used to print logs or errors to the browser console.
-var console: JavaScriptObject = null
-
 
 
 # PRIVATE PROPERTIES
@@ -20,6 +17,24 @@ var _callbacks: Array[Callable] = []
 
 
 # PUBLIC METHODS
+
+
+
+## A wrapper for the JS [code]console.err()[/code] method.
+## Will call Godot's [code]printerr()[/code] method if the game is not running in the browser.
+func console_error(text: String) -> void:
+	if is_running:
+		JavaScriptBridge.eval("console.err(`" + text + "`)")
+	else:
+		printerr(text)
+
+## A wrapper for the JS [code]console.log()[/code] method.
+## Will call Godot's [code]print()[/code] method if the game is not running in the browser.
+func console_log(text: String) -> void:
+	if is_running:
+		JavaScriptBridge.eval("console.log(`" + text + "`)")
+	else:
+		print(text)
 
 ## A wrapper for the JS [code]alert()[/code] method.
 ## Will call Godot's [code]print()[/code] method if the game is not running in the browser.
@@ -39,7 +54,7 @@ func download(text: String, filename: String, type: String) -> void:
 			"downloader.download = '" + filename + "';\n" +
 			"downloader.click();")
 	else:
-		printerr("Cannot download without a browser.")
+		console_error("Cannot download without a browser.")
 
 ## Has the browser prompt the user to upload a file. Will attempt to get the contents of that file
 ## and pass it back as a parameter in [param callback].
@@ -64,7 +79,7 @@ func upload(callback: Callable) -> void:
 			"	}\n" +
 			"});")
 	else:
-		printerr("Cannot upload without a browser.")
+		console_error("Cannot upload without a browser.")
 
 
 
@@ -74,7 +89,6 @@ func upload(callback: Callable) -> void:
 func _ready() -> void:
 	is_running = OS.has_feature('web')
 	if is_running:
-		console = JavaScriptBridge.get_interface("console")
 		JavaScriptBridge.eval("var results = []", true)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

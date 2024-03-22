@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://bmplqy4eg1ru8"]
+
+[ext_resource type="PackedScene" uid="uid://cxua6gul8e1d7" path="res://menus/save_menu.tscn" id="1_yr646"]
+[ext_resource type="PackedScene" uid="uid://ce71e4vwspfwt" path="res://menus/open_menu.tscn" id="2_43s2k"]
+
+[node name="MenuManager" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0.25098)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SaveMenu" parent="CenterContainer" instance=ExtResource("1_yr646")]
+visible = false
+layout_mode = 2
+
+[node name="OpenMenu" parent="CenterContainer" instance=ExtResource("2_43s2k")]
+layout_mode = 2

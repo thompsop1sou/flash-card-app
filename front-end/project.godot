@@ -19,6 +19,7 @@ run/positional_shadow/soft_shadow_filter_quality=0
 [autoload]
 
 Browser="*res://browser.gd"
+Server="*res://server.gd"
 
 [input]
 

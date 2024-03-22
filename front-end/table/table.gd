@@ -114,17 +114,17 @@ func save_card_str_pairs() -> Array[Dictionary]:
 func _ready() -> void:
 	# Add some demo cards to the draw stack
 	var card_str_pairs: Array[Dictionary] = []
-	for i in range(10):
+	for i in range(100):
 		card_str_pairs.append({"front": "front " + str(i), "back": "back " + str(i)})
 	load_card_str_pairs(card_str_pairs)
 
-# Called when the fetch button is pressed.
-func _on_fetch_pressed() -> void:
-	print("fetch")
+# Called when the open button is pressed.
+func _on_open_pressed() -> void:
+	Browser.console_log("open")
 
-# Called when the send button is pressed.
-func _on_send_pressed() -> void:
-	print("send")
+# Called when the save button is pressed.
+func _on_save_pressed() -> void:
+	Browser.console_log("save")
 
 # Called when the left arrow is pressed.
 func _on_left_arrow_pressed() -> void:
@@ -183,14 +183,12 @@ func _on_right_arrow_pressed() -> void:
 
 # Called when the download button is pressed.
 func _on_download_pressed() -> void:
-	if Browser.is_running:
-		var text: String = JSON.stringify(save_card_str_pairs(), "    ")
-		Browser.download(text, "flashcards.json", "json")
+	var text: String = JSON.stringify(save_card_str_pairs(), "    ")
+	Browser.download(text, "flashcards.json", "json")
 
 # Called when the upload button is pressed.
 func _on_upload_pressed() -> void:
-	if Browser.is_running:
-		Browser.upload(_upload_callback)
+	Browser.upload(_upload_callback)
 
 # Definition of the callback function used with Browser.upload().
 func _upload_callback(results: String) -> void:

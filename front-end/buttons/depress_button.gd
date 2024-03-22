@@ -18,7 +18,7 @@ func _ready() -> void:
 	# Find the mesh
 	_mesh = Utilities.find_first_child(self, "MeshInstance3D") as MeshInstance3D
 	if not is_instance_valid(_mesh):
-		printerr(self, " cannot find a mesh")
+		Browser.console_log(str(self) + " cannot find a mesh")
 	# Connect up signals
 	down.connect(_on_down)
 	up.connect(_on_up)

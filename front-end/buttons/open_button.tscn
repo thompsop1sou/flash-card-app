@@ -2,18 +2,18 @@
 
 [ext_resource type="Script" path="res://buttons/depress_button.gd" id="1_rxeeb"]
 [ext_resource type="Material" uid="uid://ij3gj1g3enu4" path="res://buttons/button_material.tres" id="2_obl62"]
-[ext_resource type="ArrayMesh" uid="uid://b6nmse6ki5l0i" path="res://buttons/models/fetch_mesh.res" id="3_l8j4c"]
+[ext_resource type="ArrayMesh" uid="uid://bsxt2tkn0chre" path="res://buttons/models/open_mesh.res" id="3_qt4es"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_1citv"]
 points = PackedVector3Array(-9.7841e-05, 0.5, 0.199981, -9.7841e-05, 0.5, -2.98023e-07, -0.0648003, 0.491386, 0.199981, -9.7841e-05, -0.5, 0.2, 0.0646046, 0.491386, 0.199981, -0.0648003, 0.491386, -2.98023e-07, 0.0646046, 0.491386, -2.98023e-07, -0.125098, 0.466425, 0.199981, 0.499902, -0.100039, 0.199981, 0.499902, -9.78708e-05, 0.199981, 0.491386, 0.0646045, 0.199981, 0.466425, 0.124902, 0.199981, 0.426684, 0.176684, 0.199981, 0.176684, 0.426684, 0.199981, 0.124902, 0.466425, 0.199981, -0.375098, 0.341425, 0.199981, -0.426879, 0.301684, 0.199981, -0.466523, 0.249902, 0.199981, -0.491582, 0.189605, 0.199981, -0.5, 0.124902, 0.199981, -0.5, -0.100039, 0.199981, -9.7841e-05, -0.5, -2.98023e-07, -0.125098, 0.466425, -2.98023e-07, 0.124902, 0.466425, -2.98023e-07, 0.499902, -0.100039, -2.98023e-07, 0.499902, -9.78708e-05, -2.98023e-07, 0.491386, 0.0646045, -2.98023e-07, 0.466425, 0.124902, -2.98023e-07, 0.426684, 0.176684, -2.98023e-07, 0.176684, 0.426684, -2.98023e-07, -0.375098, 0.341425, -2.98023e-07, -0.426879, 0.301684, -2.98023e-07, -0.466523, 0.249902, -2.98023e-07, -0.491582, 0.189605, -2.98023e-07, -0.5, 0.124902, -2.98023e-07, -0.5, -0.100039, -2.98023e-07)
 
-[node name="FetchButton" type="Area3D"]
+[node name="OpenButton" type="Area3D"]
 script = ExtResource("1_rxeeb")
 
-[node name="FetchMesh" type="MeshInstance3D" parent="."]
+[node name="OpenMesh" type="MeshInstance3D" parent="."]
 material_override = ExtResource("2_obl62")
 lod_bias = 128.0
-mesh = ExtResource("3_l8j4c")
+mesh = ExtResource("3_qt4es")
 
-[node name="FetchCollision" type="CollisionShape3D" parent="."]
+[node name="OpenCollision" type="CollisionShape3D" parent="."]
 shape = SubResource("ConvexPolygonShape3D_1citv")
