@@ -14,6 +14,7 @@ script = ExtResource("1_0xvax")
 
 [node name="UploadMesh" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_4e8dj")
+lod_bias = 128.0
 mesh = ExtResource("2_3n2nr")
 
 [node name="UploadCollision" type="CollisionShape3D" parent="."]

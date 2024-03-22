@@ -56,7 +56,7 @@ var _back_angle: float = PI - _epsilon
 
 ## Flips the orientation of this card to the opposite of what it currently is.
 ## If [param animated], will use a tween to flip the card over a period of 0.5 seconds.
-func flip_orientation(animated: bool = true, callback: Callable = Callable()) -> void:
+func flip_orientation(animated: bool = true, callback: Callable = func(): pass) -> void:
 	# Animate the card using a tween
 	if animated:
 		match _orientation:

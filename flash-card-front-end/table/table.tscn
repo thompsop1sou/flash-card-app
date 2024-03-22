@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://cnjufp3g5ubld"]
+[gd_scene load_steps=10 format=3 uid="uid://cnjufp3g5ubld"]
 
 [ext_resource type="Script" path="res://table/table.gd" id="1_1aj4v"]
 [ext_resource type="Script" path="res://table/stack.gd" id="2_6a2tr"]
 [ext_resource type="PackedScene" uid="uid://d1sol4nwv1ofg" path="res://buttons/download_button.tscn" id="4_22jba"]
 [ext_resource type="PackedScene" uid="uid://ce3003fmlq16v" path="res://buttons/arrow_button.tscn" id="4_eiu7d"]
 [ext_resource type="PackedScene" uid="uid://day2k4875mwdf" path="res://buttons/upload_button.tscn" id="5_dccwv"]
+[ext_resource type="PackedScene" uid="uid://cn6nskcwm6bau" path="res://buttons/reset_button.tscn" id="6_7sqv4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ryhch"]
 albedo_color = Color(0.12549, 0.501961, 0.12549, 1)
@@ -43,16 +44,19 @@ script = ExtResource("2_6a2tr")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.5, 0)
 
 [node name="LeftArrow" parent="Buttons" instance=ExtResource("4_eiu7d")]
-transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, -0.5, 0, 0)
+transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, -1, 0, 0)
 
 [node name="RightArrow" parent="Buttons" instance=ExtResource("4_eiu7d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
 
 [node name="Download" parent="Buttons" instance=ExtResource("4_22jba")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
 
 [node name="Upload" parent="Buttons" instance=ExtResource("5_dccwv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0, 0)
+
+[node name="Reset" parent="Buttons" instance=ExtResource("6_7sqv4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 0, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.965926, 0.12941, -0.224144, 0, 0.866025, 0.5, 0.258819, -0.482963, 0.836516, 0, 4, 2)
@@ -78,3 +82,4 @@ far = 4.0
 [connection signal="pressed" from="Buttons/RightArrow" to="." method="_on_right_arrow_pressed"]
 [connection signal="pressed" from="Buttons/Download" to="." method="_on_download_pressed"]
 [connection signal="pressed" from="Buttons/Upload" to="." method="_on_upload_pressed"]
+[connection signal="pressed" from="Buttons/Reset" to="." method="_on_reset_pressed"]

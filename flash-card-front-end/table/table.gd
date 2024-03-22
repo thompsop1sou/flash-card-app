@@ -118,6 +118,31 @@ func _ready() -> void:
 		card_str_pairs.append({"front": "front " + str(i), "back": "back " + str(i)})
 	load_card_str_pairs(card_str_pairs)
 
+# Called when the reset button is pressed.
+func _on_reset_pressed() -> void:
+	# Move the center card if there is one
+	var center_card: Card = Utilities.find_first_child(center_card_spot, "Card") as Card
+	if is_instance_valid(center_card):
+		# Orient it correctly
+		if center_card.get_orientation() == Card.Orientation.BACK:
+			center_card.flip_orientation(false)
+		# Move it to the draw stack
+		draw_stack.push_card(center_card)
+		center_card.reparent(draw_stack)
+		center_card.position = draw_stack.get_top_position()
+	# Move all of the cards from the discard stack
+	var discard_card = discard_stack.pop_card()
+	while is_instance_valid(discard_card):
+		# Orient it correctly
+		if discard_card.get_orientation() == Card.Orientation.BACK:
+			discard_card.flip_orientation(false)
+		# Move it to the draw stack
+		draw_stack.push_card(discard_card)
+		discard_card.reparent(draw_stack)
+		discard_card.position = draw_stack.get_top_position()
+		# Get a reference to the next discard card
+		discard_card = discard_stack.pop_card()
+
 # Called when the left arrow is pressed.
 func _on_left_arrow_pressed() -> void:
 	# Only do something if not already in the process of changing
