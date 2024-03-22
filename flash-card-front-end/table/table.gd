@@ -62,6 +62,7 @@ func load_card_str_pairs(card_str_pairs) -> void:
 	# Ensure the data passed in is valid
 	if typeof(card_str_pairs) != TYPE_ARRAY:
 		Browser.alert("Error loading flashcard set: Data is not an array.")
+		return
 	for card_str_pair in card_str_pairs:
 		if typeof(card_str_pair) != TYPE_DICTIONARY or not card_str_pair.has("front") or not card_str_pair.has("back"):
 			Browser.alert("Error loading flashcard set: Bad data at index " + str(card_str_pairs.find(card_str_pair)) + ".")

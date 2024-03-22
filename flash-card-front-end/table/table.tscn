@@ -68,11 +68,11 @@ environment = SubResource("Environment_84wpw")
 transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.98023e-08, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
 projection = 1
 fov = 60.0
 size = 9.0
-far = 3.0
+far = 4.0
 
 [connection signal="pressed" from="Buttons/LeftArrow" to="." method="_on_left_arrow_pressed"]
 [connection signal="pressed" from="Buttons/RightArrow" to="." method="_on_right_arrow_pressed"]
