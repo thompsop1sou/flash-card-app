@@ -142,6 +142,10 @@ func _on_open_pressed() -> void:
 
 # Called after receiving a response from the server when trying to open a flashcard set.
 func _open_callback(_result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray):
+	# Indicate if the user is unauthorized
+	if response_code == HTTPClient.RESPONSE_UNAUTHORIZED:
+		Browser.alert("Not authorized to access the server.")
+		return
 	# Parse the body
 	var body_string: String = body.get_string_from_utf8()
 	var body_json = JSON.parse_string(body_string)
@@ -170,6 +174,10 @@ func _on_save_pressed() -> void:
 
 # Called after receiving a response from the server when trying to save a flashcard set.
 func _save_callback(_result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray):
+	# Indicate if the user is unauthorized
+	if response_code == HTTPClient.RESPONSE_UNAUTHORIZED:
+		Browser.alert("Not authorized to access the server.")
+		return
 	# Parse the body
 	var body_string: String = body.get_string_from_utf8()
 	var body_json = JSON.parse_string(body_string)
