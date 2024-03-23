@@ -4,7 +4,7 @@ A 3D flash card app. The front end is built in Godot and the back end is built u
 
 ## Description
 
-This app allows you to scroll through a set of flash cards in a 3D interface. You can load or save flashcards to the back-end server using two buttons on the left of the interface. You can upload or download flashcard sets to your device (as JSON files) using two buttons on the right of the interface.
+This app allows you to scroll through a set of flash cards in a 3D interface. You can load or save flashcards to the back-end server using two buttons on the left side of the interface. You can upload or download flashcard sets to your device (as JSON files) using two buttons on the right side of the interface.
 
 To see this in action, visit the front-end app at https://thompsop1sou.github.io/flash-cards/.
 
@@ -36,6 +36,6 @@ To see this in action, visit the front-end app at https://thompsop1sou.github.io
 
 5. Start the front end.
    * Run the Godot executable.
-   * From the Project Manager window, import the front end project.
+   * From the Project Manager window, import the front-end project.
       * You should be able to navigate to the `front-end` folder and click "Import and Edit"
-   * With the project open, click the run button in the top right or press `F5`.
+   * With the project open, click the run button in the top right (or press `F5`).
