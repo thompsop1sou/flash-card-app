@@ -5,20 +5,20 @@ const app = express();
 const port = 3000;
 const server_key = process.env["FLASHCARD_SERVER_KEY"];
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // Open a named flashcard set
 app.post("/open", (req, res) => {
-  let set_name = req.query.name;
-  console.log(`Trying to open ${set_name}`);
-  res.status(200);
+  console.log(req.body);
+  console.log(`Trying to open "${req.body.name}"`);
+  res.status(200).send("Success!");
 });
 
 // Save a named flashcard set (may replace an existing one with the same name)
 app.post("/save", (req, res) => {
-  let set_name = req.query.name;
-  console.log(`Trying to save ${set_name}`);
-  res.status(200);
+  console.log(req.body);
+  console.log(`Trying to save "${req.body.name}"`);
+  res.status(200).send("Success!");
 });
 
 app.listen(port, () => {

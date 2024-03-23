@@ -138,7 +138,13 @@ func _on_open_pressed() -> void:
 	var open_name: String = await menu_manager.get_open_name()
 	_enable_buttons()
 	# Make a request to the server
-	Server.request_open(open_name)
+	Server.request_open(open_name, _open_callback)
+
+# 
+func _open_callback(_result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray):
+	if response_code == HTTPClient.RESPONSE_OK:
+		var body_string: String = body.get_string_from_utf8()
+		Browser.alert("Opened! " + body_string)
 
 # Called when the save button is pressed.
 func _on_save_pressed() -> void:
@@ -147,7 +153,13 @@ func _on_save_pressed() -> void:
 	var save_name: String = await menu_manager.get_save_name()
 	_enable_buttons()
 	# Make a request to the server
-	Server.request_save(save_name, "[]")
+	Server.request_save(save_name, "[]", _save_callback)
+
+# 
+func _save_callback(_result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray):
+	if response_code == HTTPClient.RESPONSE_OK:
+		var body_string: String = body.get_string_from_utf8()
+		Browser.alert("Saved! " + body_string)
 
 # Called when the left arrow is pressed.
 func _on_left_arrow_pressed() -> void:
