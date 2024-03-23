@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 
+// Need access to the flashcard database
 import FlashcardSet from "./model.js";
 
 const app = express();

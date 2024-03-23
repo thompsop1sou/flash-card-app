@@ -6,9 +6,6 @@
 offset_right = 99.0
 offset_bottom = 66.0
 script = ExtResource("1_4xhbu")
-edit_text = null
-submit_text = null
-cancel_text = null
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2

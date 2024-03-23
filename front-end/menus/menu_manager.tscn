@@ -31,6 +31,3 @@ grow_vertical = 2
 
 [node name="TextSubmit" parent="CenterContainer" instance=ExtResource("2_jn0lq")]
 layout_mode = 2
-edit_text = null
-submit_text = ""
-cancel_text = ""
