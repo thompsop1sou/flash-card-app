@@ -138,30 +138,8 @@ func _on_open_pressed() -> void:
 	var open_name: String = await menu_manager.get_open_name()
 	_enable_buttons()
 	# Make a request to the server
-	Server.request_open(open_name, _open_callback)
-
-# Called after receiving a response from the server when trying to open a flashcard set.
-func _open_callback(_result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray):
-	# Indicate if the user is unauthorized
-	if response_code == HTTPClient.RESPONSE_UNAUTHORIZED:
-		Browser.alert("Not authorized to access the server.")
-		return
-	# Parse the body
-	var body_string: String = body.get_string_from_utf8()
-	var body_json = JSON.parse_string(body_string)
-	# If the body was successfuly parsed...
-	if typeof(body_json) == TYPE_DICTIONARY:
-		# Load up the cards if they were sent back
-		if response_code == HTTPClient.RESPONSE_OK and body_json.has("cards"):
-			load_card_str_pairs(body_json["cards"])
-		# Otherwise, indicate an error to the user
-		elif body_json.has("name"):
-			Browser.alert("Error while trying to open the flashcard set \"" + str(body_json["name"]) + "\".")
-		else:
-			Browser.alert("Error while trying to open the flashcard set.")
-	# If the body was not parsed, indicate an error to the user
-	else:
-		Browser.alert("Error while trying to open the flashcard set.")
+	Server.open_request(open_name)
+	load_card_str_pairs(await Server.open_request_succeeded)
 
 # Called when the save button is pressed.
 func _on_save_pressed() -> void:
@@ -170,28 +148,7 @@ func _on_save_pressed() -> void:
 	var save_name: String = await menu_manager.get_save_name()
 	_enable_buttons()
 	# Make a request to the server
-	Server.request_save(save_name, JSON.stringify(save_card_str_pairs()), _save_callback)
-
-# Called after receiving a response from the server when trying to save a flashcard set.
-func _save_callback(_result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray):
-	# Indicate if the user is unauthorized
-	if response_code == HTTPClient.RESPONSE_UNAUTHORIZED:
-		Browser.alert("Not authorized to access the server.")
-		return
-	# Parse the body
-	var body_string: String = body.get_string_from_utf8()
-	var body_json = JSON.parse_string(body_string)
-	# If the body was successfuly parsed...
-	if typeof(body_json) == TYPE_DICTIONARY and body_json.has("name"):
-		# Indicate success to the user if received 200 OK
-		if response_code == HTTPClient.RESPONSE_OK:
-			Browser.alert("Successfully saved the flashcard set \"" + str(body_json["name"]) + "\".")
-		# Otherwise, indicate an error to the user
-		else:
-			Browser.alert("Error while trying to save the flashcard set \"" + str(body_json["name"]) + "\".")
-	# If the body was not parsed, indicate an error to the user
-	else:
-		Browser.alert("Error while trying to save the flashcard set.")
+	Server.save_request(save_name, JSON.stringify(save_card_str_pairs()))
 
 # Called when the left arrow is pressed.
 func _on_left_arrow_pressed() -> void:
