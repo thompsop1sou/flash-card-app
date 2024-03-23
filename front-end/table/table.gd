@@ -133,15 +133,21 @@ func _enable_buttons() -> void:
 
 # Called when the open button is pressed.
 func _on_open_pressed() -> void:
+	# Popup to get user-entered name
 	_disable_buttons()
-	await menu_manager.open()
+	var open_name: String = await menu_manager.get_open_name()
 	_enable_buttons()
+	# Make a request to the server
+	Server.request_open(open_name)
 
 # Called when the save button is pressed.
 func _on_save_pressed() -> void:
+	# Popup to get user-entered name
 	_disable_buttons()
-	await menu_manager.save()
+	var save_name: String = await menu_manager.get_save_name()
 	_enable_buttons()
+	# Make a request to the server
+	Server.request_save(save_name, "[]")
 
 # Called when the left arrow is pressed.
 func _on_left_arrow_pressed() -> void:
