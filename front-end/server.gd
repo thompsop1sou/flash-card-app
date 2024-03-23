@@ -57,6 +57,7 @@ func _open_request_callback(_result: int, response_code: int, _headers: PackedSt
 		return
 	# Parse the body
 	var body_string: String = body.get_string_from_utf8()
+	print(body_string)
 	var body_json = JSON.parse_string(body_string)
 	# If the body was successfuly parsed...
 	if typeof(body_json) == TYPE_DICTIONARY and body_json.has("name"):

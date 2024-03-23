@@ -117,7 +117,7 @@ func save_card_str_pairs() -> Array[Dictionary]:
 func _ready() -> void:
 	# Add some demo cards to the draw stack
 	var card_str_pairs: Array[Dictionary] = []
-	for i in range(100):
+	for i in range(10):
 		card_str_pairs.append({"front": "front " + str(i), "back": "back " + str(i)})
 	load_card_str_pairs(card_str_pairs)
 
