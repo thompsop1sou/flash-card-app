@@ -3,9 +3,12 @@
 [ext_resource type="Script" path="res://menus/text_submit.gd" id="1_4xhbu"]
 
 [node name="TextSubmit" type="PanelContainer"]
-offset_right = 142.0
+offset_right = 99.0
 offset_bottom = 66.0
 script = ExtResource("1_4xhbu")
+edit_text = null
+submit_text = null
+cancel_text = null
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -28,8 +31,12 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="SubmitButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="CancelButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
 [connection signal="text_submitted" from="MarginContainer/VBoxContainer/HBoxContainer/LineEdit" to="." method="_on_text_submitted"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/SubmitButton" to="." method="_on_submit_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]

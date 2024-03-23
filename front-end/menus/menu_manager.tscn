@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bmplqy4eg1ru8"]
+[gd_scene load_steps=3 format=3 uid="uid://bmplqy4eg1ru8"]
 
 [ext_resource type="Script" path="res://menus/menu_manager.gd" id="1_gv2mq"]
-[ext_resource type="PackedScene" uid="uid://b45kjj8neehbj" path="res://menus/open_text_submit.tscn" id="2_vdk47"]
-[ext_resource type="PackedScene" uid="uid://hxst45bbn0v4" path="res://menus/save_text_submit.tscn" id="3_pppgu"]
+[ext_resource type="PackedScene" uid="uid://cxua6gul8e1d7" path="res://menus/text_submit.tscn" id="2_jn0lq"]
 
 [node name="MenuManager" type="Control"]
 layout_mode = 3
@@ -30,10 +29,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="OpenTextSubmit" parent="CenterContainer" instance=ExtResource("2_vdk47")]
-visible = false
+[node name="TextSubmit" parent="CenterContainer" instance=ExtResource("2_jn0lq")]
 layout_mode = 2
-
-[node name="SaveTextSubmit" parent="CenterContainer" instance=ExtResource("3_pppgu")]
-visible = false
-layout_mode = 2
+edit_text = null
+submit_text = ""
+cancel_text = ""
