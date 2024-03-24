@@ -50,7 +50,7 @@ To see this in action, visit the front-end app at https://thompsop1sou.github.io
 
 ### Back End
 
-The back end follows the typical structure of a MERN stack:
+The back end follows the typical structure of a MERN stack (minus the "R"):
 * In `model.js`, the MongoDB database is initialized using the Mongoose package. It just has a single model, `FlashcardSet`, which is composed of two schemas: `flashcardSetSchema` for the main document and `flashcardSchema` for the subdocuments that are contained therein.
 * In `index.js`, Node and Express are used to handle incoming HTTP requests. Based on the endpoint of the request and its contents, some sort of call is made to the database, and the corresponding data is sent back to the front end.
 
@@ -58,7 +58,7 @@ The back end follows the typical structure of a MERN stack:
 
 The front end makes use of Godot's 3D capabilities along with its node system and scene tree. I would suggest seeing the official docs for an introduction to these concepts: https://docs.godotengine.org/en/stable/getting_started/introduction/key_concepts_overview.html.
 
-In summary, the `table.tscn` is the "main" scene for this project, which means that it is the first scene that is loaded up by the project. In this scene, there is a table-top surface and a row of buttons along the bottom of the surface. The scene also contains three spots where flashcards can be placed called `DrawStack`, `CenterCardSpot`, and `DiscardStack`.
+In summary, `table.tscn` is the "main" scene for this project, which means that it is the first scene that is loaded up by the project. In this scene, there is a table-top surface and a row of buttons along the bottom of the surface. The scene also contains three spots where flashcards can be placed called `DrawStack`, `CenterCardSpot`, and `DiscardStack`.
 
 In addition, `table.tscn` has a script called `table.gd` attached to it. When the project is started up, the `_ready()` method of `table.gd` is run automatically. For now, this method just adds 10 placeholder cards to the `DrawStack`.
 
