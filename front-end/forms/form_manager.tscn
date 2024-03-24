@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://bmplqy4eg1ru8"]
 
-[ext_resource type="Script" path="res://menus/menu_manager.gd" id="1_gv2mq"]
-[ext_resource type="PackedScene" uid="uid://cxua6gul8e1d7" path="res://menus/text_submit.tscn" id="2_jn0lq"]
+[ext_resource type="Script" path="res://forms/form_manager.gd" id="1_gv2mq"]
+[ext_resource type="PackedScene" uid="uid://cxua6gul8e1d7" path="res://forms/text_submit.tscn" id="2_jn0lq"]
 
-[node name="MenuManager" type="Control"]
+[node name="FormManager" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

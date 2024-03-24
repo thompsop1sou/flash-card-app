@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cvf3c0rmcvl1q" path="res://buttons/loop_button.tscn" id="6_cppp4"]
 [ext_resource type="PackedScene" uid="uid://bflyl7np4id43" path="res://buttons/save_button.tscn" id="7_bswl4"]
 [ext_resource type="PackedScene" uid="uid://dd7prctmuxg3y" path="res://buttons/open_button.tscn" id="8_68g3x"]
-[ext_resource type="PackedScene" uid="uid://bmplqy4eg1ru8" path="res://menus/menu_manager.tscn" id="9_qlm2r"]
+[ext_resource type="PackedScene" uid="uid://bmplqy4eg1ru8" path="res://forms/form_manager.tscn" id="9_qlm2r"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ryhch"]
 albedo_color = Color(0.376471, 0.376471, 0.376471, 1)
@@ -90,7 +90,7 @@ fov = 60.0
 size = 9.0
 far = 8.0
 
-[node name="MenuManager" parent="." instance=ExtResource("9_qlm2r")]
+[node name="FormManager" parent="." instance=ExtResource("9_qlm2r")]
 visible = false
 
 [connection signal="pressed" from="Buttons/Open" to="." method="_on_open_pressed"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cxua6gul8e1d7"]
 
-[ext_resource type="Script" path="res://menus/text_submit.gd" id="1_4xhbu"]
+[ext_resource type="Script" path="res://forms/text_submit.gd" id="1_4xhbu"]
 
 [node name="TextSubmit" type="PanelContainer"]
 offset_right = 99.0

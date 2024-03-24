@@ -19,8 +19,8 @@ var card_scene := preload("res://card/card.tscn")
 @onready var center_card_spot: Node3D = $Cards/CenterCardSpot
 @onready var discard_stack: Stack = $Cards/DiscardStack
 
-# Keep a reference to the menu manager
-@onready var menu_manager: Control = $MenuManager
+# Keep a reference to the form manager.
+@onready var form_manager: Control = $FormManager
 
 
 
@@ -135,12 +135,12 @@ func _enable_buttons() -> void:
 func _on_open_pressed() -> void:
 	# Popup to get user-entered name
 	_disable_buttons()
-	var open_name_result: Utilities.Result = await menu_manager.get_open_name()
+	var open_name_result: Utilities.Result = await form_manager.get_open_name()
 	_enable_buttons()
-	# If a name was submitted, make a request to the server
+	# If a name was submitted, make a request to the back-end server
 	if open_name_result.succeeded:
-		Server.open_request(open_name_result.value)
-		var open_request_result: Utilities.Result = await Server.open_request_completed
+		BackEnd.open_request(open_name_result.value)
+		var open_request_result: Utilities.Result = await BackEnd.open_request_completed
 		# If the request succeeded, load up the cards
 		if open_request_result.succeeded:
 			load_card_str_pairs(open_request_result.value)
@@ -149,11 +149,11 @@ func _on_open_pressed() -> void:
 func _on_save_pressed() -> void:
 	# Popup to get user-entered name
 	_disable_buttons()
-	var save_name_result: Utilities.Result = await menu_manager.get_save_name()
+	var save_name_result: Utilities.Result = await form_manager.get_save_name()
 	_enable_buttons()
-	# If a name was submitted, make a request to the server
+	# If a name was submitted, make a request to the back-end server
 	if save_name_result.succeeded:
-		Server.save_request(save_name_result.value, JSON.stringify(save_card_str_pairs()))
+		BackEnd.save_request(save_name_result.value, JSON.stringify(save_card_str_pairs()))
 
 # Called when the left arrow is pressed.
 func _on_left_arrow_pressed() -> void:

@@ -4,14 +4,14 @@ extends Control
 
 # PRIVATE PROPERTIES
 
-# Keep references to the two sub-menus.
+# Keep a reference to the text submission form.
 @onready var _text_submit: TextSubmit = $CenterContainer/TextSubmit
 
 
 
 # PUBLIC METHODS
 
-## Will open a popup to get the name of a flashcard set to open.
+## Will open a popup form to get the name of a flashcard set to open.
 func get_open_name() -> Utilities.Result:
 	# Make everything visible
 	visible = true
@@ -30,7 +30,7 @@ func get_open_name() -> Utilities.Result:
 	# Return the name the user entered
 	return open_name_result
 
-## Will open a popup for saving a flashcard set.
+## Will open a popup form to get the name for saving a flashcard set.
 func get_save_name() -> Utilities.Result:
 	# Make everything visible
 	visible = true
